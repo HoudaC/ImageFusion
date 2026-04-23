@@ -101,7 +101,6 @@ if __name__=="__main__":
 
         # Run the test function to evaluate the model's performance
         avg_psnr, avg_ssim, avg_rmse, lr_patches, hr_patches, sr_patches = conditionnal_test(model, test_dataloader, device)
-        w, h = define_stride(img_test_all.shape[2], img_size)[1], define_stride(img_test_all.shape[3], img_size)[1]
         original_shape = img_test_all[0].transpose(1,2,0)[:,:,:10].shape
 
         hr_image = reconstruct_image_avg(hr_patches.transpose(0, 2, 3, 1), original_shape, patch, strides)

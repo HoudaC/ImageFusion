@@ -43,9 +43,9 @@ def plot_images_and_spectra(lr_image, hr_image, sr_image, image_title):
     fig, axs = plt.subplots(1, 4)
 
     # Original HR Image
-    axs[0].imshow(imageRGB_vminvmax(hr_image, vmin, vmax))
-    axs[0].set_title('Original HR Image')
-    axs[0].axis('off')
+    axs[2].imshow(imageRGB_vminvmax(hr_image, vmin, vmax))
+    axs[2].set_title('Original HR Image GT')
+    axs[2].axis('off')
 
     # Generated SR Image
     axs[1].imshow(imageRGB_vminvmax(sr_image, vmin, vmax))
@@ -53,14 +53,16 @@ def plot_images_and_spectra(lr_image, hr_image, sr_image, image_title):
     axs[1].axis('off')
 
     # Low-Resolution Image
-    axs[2].imshow(imageRGB_vminvmax(lr_image, vmin, vmax))
-    axs[2].set_title('Low-Resolution Image')
-    axs[2].axis('off')
+    axs[0].imshow(imageRGB_vminvmax(lr_image, vmin, vmax))
+    axs[0].set_title('Low-Resolution Image')
+    axs[0].axis('off')
+
+
     sentinel_wavelength = [489, 559, 665, 703, 740, 783, 850, 864, 1610, 2192]
 
     # Frequency Spectrum for Original HR Image
     axs[3].plot(sentinel_wavelength,np.mean(hr_image, axis =(0,1)), "b*", label="GT")
-    axs[3].plot(sentinel_wavelength,np.mean(sr_image, axis=(0, 1)), "r*", label="generaed superresoltiont")
+    axs[3].plot(sentinel_wavelength,np.mean(sr_image, axis=(0, 1)), "r*", label="generated superresoltiont")
     axs[3].plot(sentinel_wavelength, np.mean(lr_image, axis=(0, 1)), "g*", label="Low resolution")
     axs[3].set_title('Spectrum')
     axs[3].legend(fontsize=10, loc="lower center")
@@ -69,3 +71,32 @@ def plot_images_and_spectra(lr_image, hr_image, sr_image, image_title):
     plt.tight_layout()
     plt.show()
 
+
+# Function to plot images and their spectra
+def plot_images_and_compare(lr_image, hr_image, sr_image, sr_image_bicubic):
+    # Plot Original HR Image, Generated SR Image, and Low-Resolution Image
+    fig, axs = plt.subplots(1, 4)
+    # Low-Resolution Image
+    axs[0].imshow(imageRGB_vminvmax(lr_image, vmin, vmax))
+    axs[0].set_title('Low-Resolution Image')
+    axs[0].axis('off')
+
+    # Original HR Image GT
+    axs[1].imshow(imageRGB_vminvmax(hr_image, vmin, vmax))
+    axs[1].set_title('Original HR Image GT')
+    axs[1].axis('off')
+
+    # Generated SR Image
+    axs[2].imshow(imageRGB_vminvmax(sr_image, vmin, vmax))
+    axs[2].set_title('Generated SR Image with SRCNN')
+    axs[2].axis('off')
+    # Generated SR Image with bicubic interpolation
+    axs[3].imshow(imageRGB_vminvmax(sr_image_bicubic, vmin, vmax))
+    axs[3].set_title('Bicubic interpolation')
+    axs[3].axis('off')
+
+
+    plt.suptitle("Comparison between bicubic and SRCNN")
+
+    # plt.tight_layout()
+    plt.show()

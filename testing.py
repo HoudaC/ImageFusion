@@ -95,18 +95,22 @@ if __name__=="__main__":
     img_size = 32
     test_dataloader_batch_size = 1
     patch = (img_size, img_size)
-    img_test_all_, img_test_names = read_data(data_test_dir, 100)
-    img_test_all_ = np.stack(img_test_all_, axis=0)
+    img_test_all, img_test_names = read_data(data_test_dir, 100)
+    img_test_all = np.stack(img_test_all, axis=0)
+    img = img_test_all[0]
+
+    strides = define_stride(img.shape[1], img_size)[0], define_stride(img.shape[2], img_size)[
+        0]
+    original_shape = img.transpose(1, 2, 0)[:, :, :10].shape
+
     # img_totest_idx =40
-    for img_totest_idx in range(img_test_all_.shape[0]):
-        img_test_all = np.array([img_test_all_[img_totest_idx]])
-        strides = define_stride(img_test_all[0].shape[1], img_size)[0], define_stride(img_test_all[0].shape[2], img_size)[
-            0]
-        test_dataloader = sr_dataloader(img_test_all, patch, strides, test_dataloader_batch_size)
+    for img_totest_idx in range(img_test_all.shape[0]):
+        img_test = np.array([img_test_all[img_totest_idx]])
+
+        test_dataloader = sr_dataloader(img_test, patch, strides, test_dataloader_batch_size)
 
         avg_psnr, avg_ssim, avg_rmse, lr_patches, hr_patches, sr_patches = test(model, test_dataloader, device)
-        w, h = define_stride(img_test_all.shape[2], img_size)[1], define_stride(img_test_all.shape[3], img_size)[1]
-        original_shape = img_test_all[0].transpose(1,2,0)[:,:,:10].shape
+
 
         hr_image = reconstruct_image_avg(hr_patches.transpose(0, 2, 3, 1), original_shape, patch, strides)
 
