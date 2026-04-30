@@ -228,22 +228,3 @@ def down_up_sentinel_4(img, freq_down_up = 4):
     return img_down_up
 
 
-
-def scalevMinvMax(x,vmin, vmax):
-    x2 = ((x - vmin)/(vmax - vmin))
-    x2[x2<0.] = 0.
-    x2[x2>1.] = 1.0
-    return x2
-
-
-def imageRGB_vminvmax(I,vmin,vmax):
-    """
-    imageRGB : processing the image before visualization
-    : I : Input satellite image
-    : rgbMinMax : Processed image
-    """
-    rMinMax = scalevMinvMax(I[:,:,2],vmin,vmax)
-    gMinMax = scalevMinvMax(I[:,:,1],vmin,vmax)
-    bMinMax = scalevMinvMax(I[:,:,0],vmin,vmax)
-    rgbMinMax = np.dstack((rMinMax,gMinMax,bMinMax))
-    return rgbMinMax
