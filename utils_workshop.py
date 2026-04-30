@@ -50,7 +50,7 @@ def apply_bicubic_interpolation(in_img):
         band4 = cv2.resize(band, dsize)
         band_up = cv2.resize(band4, (band.shape[1], band.shape[0]), interpolation=cv2.INTER_CUBIC)
         img_bicubic[b, :, :] = band_up
-    return img_bicubic.transpose(1,2,0)
+    return img.transpose(1,2,0), img_bicubic.transpose(1,2,0)
 
 # Test function to evaluate the model
 def test(model, test_loader, device):
