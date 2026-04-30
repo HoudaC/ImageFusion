@@ -80,7 +80,7 @@ def test(model, test_loader, device):
             hr_images_patches.append(hr_images[0])
             sr_images_patches.append(sr_images[0])
 
-    return np.array(lr_images_patches), np.array(hr_images_patches), np.array(sr_images_patches)
+    return np.array(lr_images_patches).transpose(0, 2, 3, 1), np.array(hr_images_patches).transpose(0, 2, 3, 1), np.array(sr_images_patches).transpose(0, 2, 3, 1)
 
 # Test function to evaluate the model
 def conditionnal_test(model, test_loader, device):
@@ -107,7 +107,7 @@ def conditionnal_test(model, test_loader, device):
             sr_images_patches.append(sr_images[0])
 
 
-    return  np.array(lr_images_patches), np.array(hr_images_patches), np.array(sr_images_patches)
+    return  np.array(lr_images_patches).transpose(0, 2, 3, 1), np.array(hr_images_patches).transpose(0, 2, 3, 1), np.array(sr_images_patches).transpose(0, 2, 3, 1)
 
 
 

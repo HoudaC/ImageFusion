@@ -50,9 +50,9 @@ if __name__=="__main__":
         avg_psnr, avg_ssim, avg_rmse, lr_patches, hr_patches, sr_patches = test(model, test_dataloader, device)
 
 
-        hr_image = reconstruct_image_avg(hr_patches.transpose(0, 2, 3, 1), original_shape, patch, strides)
-        lr_image = reconstruct_image_avg(lr_patches.transpose(0, 2, 3, 1), original_shape, patch, strides)
-        sr_image = reconstruct_image_avg(sr_patches.transpose(0, 2, 3, 1), original_shape, patch, strides)
+        hr_image = reconstruct_image_avg(hr_patches, original_shape, patch, strides)
+        lr_image = reconstruct_image_avg(lr_patches, original_shape, patch, strides)
+        sr_image = reconstruct_image_avg(sr_patches, original_shape, patch, strides)
 
         plot_images_and_compare(lr_image, hr_image, sr_image, sr_bicubic)
         rmse_bicubic = calculate_rmse(hr_image, sr_bicubic)
@@ -70,9 +70,9 @@ if __name__=="__main__":
 
         cond_test_dataloader = sr_dataloader(img_test, patch, strides, test_dataloader_batch_size, only_sentinel=False)
 
-        cond_avg_psnr, cond_avg_ssim, cond_avg_rmse, cond_lr_patches, cond_hr_patches, cond_sr_patches = conditionnal_test(cond_model, cond_test_dataloader, device)
+        cond_lr_patches, cond_hr_patches, cond_sr_patches = conditionnal_test(cond_model, cond_test_dataloader, device)
 
-        cond_sr_image = reconstruct_image_avg(cond_sr_patches.transpose(0, 2, 3, 1), original_shape, patch, strides)
+        cond_sr_image = reconstruct_image_avg(cond_sr_patches, original_shape, patch, strides)
         cond_rmse = calculate_rmse(hr_image, cond_sr_image)
         cond_psnr = calculate_psnr(hr_image, cond_sr_image)
         cond_ssim = calculate_ssim(hr_image, cond_sr_image)
