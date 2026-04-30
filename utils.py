@@ -110,7 +110,8 @@ def read_generate_data(data_dir, data_save_dir):
         with rasterio.open(imagename, "w", **img_down_4_metadata) as dst:
             dst.write(img_down_4)
 
-def reconstruct_image_avg(small_images, original_shape, size, strides):
+def reconstruct_image_avg(small_images, original_shape, patch_size, strides):
+    size= (patch_size,patch_size)
     H, W, C = original_shape
 
     full = np.zeros((H, W, C), dtype=np.float32)

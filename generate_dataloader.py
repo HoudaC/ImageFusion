@@ -113,8 +113,8 @@ def trainPrepare_condionnal(img_train_all,patch,stride):
     return X_train,Y_train
 
 
-def sr_dataloader(img_list,patch, strides,batchsize, only_sentinel= True ,applytransform= False):
-
+def sr_dataloader(img_list,patch_size, strides,batchsize, only_sentinel= True ,applytransform= False):
+    patch = (patch_size, patch_size)
     transform = A.Compose(
         [A.HorizontalFlip(p=0.2), A.VerticalFlip(p=0.2), A.RandomCrop(height=patch[0], width=patch[1], p=1),
          A.Rotate(border_mode=cv2.BORDER_CONSTANT, p=0.3)],
