@@ -55,10 +55,6 @@ def apply_bicubic_interpolation(in_img):
 # Test function to evaluate the model
 def test(model, test_loader, device):
     model.eval()  # Set the model to evaluation mode
-    total_psnr = 0.0
-    total_ssim = 0.0
-    total_rmse = 0.0
-    total_images = 0
     lr_images_patches = []
     hr_images_patches = []
     sr_images_patches = []
@@ -84,40 +80,11 @@ def test(model, test_loader, device):
             hr_images_patches.append(hr_images[0])
             sr_images_patches.append(sr_images[0])
 
-            # Calculate PSNR and SSIM for each image in the batch
-            for i in range(lr_images.shape[0]):
-                rmse = calculate_rmse(hr_images[i], sr_images[i])
-                psnr = calculate_psnr(hr_images[i], sr_images[i])
-                ssim = calculate_ssim(hr_images[i], sr_images[i])
-                total_rmse += rmse
-                total_psnr += psnr
-                total_ssim += ssim
-                # print("ssim=", ssim , "    psnr=", psnr, "       rmse=", rmse)
-                # # Visualize the original HR, LR, and SR images along with their frequency spectra
-                # plot_images_and_spectra(lr_images[i].cpu().numpy().transpose(1, 2, 0),  # Convert to HWC
-                #                         hr_images[i].transpose(1, 2, 0),  # Convert to HWC
-                #                         sr_images[i].transpose(1, 2, 0))  # Convert to HWC
-
-                total_images += 1
-
-    avg_psnr = total_psnr / total_images
-    avg_ssim = total_ssim / total_images
-    avg_rmse = total_rmse /total_images
-
-    # print(f"Average PSNR: {avg_psnr:.4f}")
-    # print(f"Average SSIM: {avg_ssim:.4f}")
-    # print(f"Average RMSE: {avg_rmse:.4f}")
-
-
-    return avg_psnr, avg_ssim,avg_rmse, np.array(lr_images_patches), np.array(hr_images_patches), np.array(sr_images_patches)
+    return np.array(lr_images_patches), np.array(hr_images_patches), np.array(sr_images_patches)
 
 # Test function to evaluate the model
 def conditionnal_test(model, test_loader, device):
     model.eval()  # Set the model to evaluation mode
-    total_psnr = 0.0
-    total_ssim = 0.0
-    total_rmse = 0.0
-    total_images = 0
     lr_images_patches = []
     hr_images_patches = []
     sr_images_patches = []
@@ -140,31 +107,7 @@ def conditionnal_test(model, test_loader, device):
             sr_images_patches.append(sr_images[0])
 
 
-
-            # Calculate PSNR and SSIM for each image in the batch
-            for i in range(lr_images.shape[0]):
-                rmse = calculate_rmse(hr_images[i], sr_images[i])
-                psnr = calculate_psnr(hr_images[i], sr_images[i])
-                ssim = calculate_ssim(hr_images[i], sr_images[i])
-                total_rmse += rmse
-                total_psnr += psnr
-                total_ssim += ssim
-                # print("ssim=", ssim , "    psnr=", psnr, "       rmse=", rmse)
-                # Visualize the original HR, LR, and SR images along with their frequency spectra
-                # plot_images_and_spectra(lr_images[i].transpose(1, 2, 0),  # Convert to HWC
-                #                         hr_images[i].transpose(1, 2, 0),  # Convert to HWC
-                #                         sr_images[i].transpose(1, 2, 0))  # Convert to HWC
-
-                total_images += 1
-
-    avg_psnr = total_psnr / total_images
-    avg_ssim = total_ssim / total_images
-    avg_rmse = total_rmse /total_images
-    # print(f"Average PSNR: {avg_psnr:.4f}")
-    # print(f"Average SSIM: {avg_ssim:.4f}")
-    # print(f"Average RMSE: {avg_rmse:.4f}")
-
-    return avg_psnr, avg_ssim,avg_rmse, np.array(lr_images_patches), np.array(hr_images_patches), np.array(sr_images_patches)
+    return  np.array(lr_images_patches), np.array(hr_images_patches), np.array(sr_images_patches)
 
 
 
