@@ -43,7 +43,7 @@ if __name__=="__main__":
     # img_totest_idx =40
     for idx in range(img_test_all.shape[0]):
         img_test = np.array([img_test_all[idx]])
-        sr_bicubic = apply_bicubic_interpolation(img_test[:,:10,:,:])
+        img_lr, sr_bicubic = apply_bicubic_interpolation(img_test[:,:10,:,:])
 
         test_dataloader = sr_dataloader(img_test[:,:10,:,:], patch, strides, test_dataloader_batch_size)
 
@@ -77,5 +77,7 @@ if __name__=="__main__":
         cond_psnr = calculate_psnr(hr_image, cond_sr_image)
         cond_ssim = calculate_ssim(hr_image, cond_sr_image)
         print("Guided SRCNN       ssim=", cond_ssim, "    psnr=", cond_psnr, "       rmse=", cond_rmse)
+        plot_images_and_spectra(lr_image, hr_image, cond_sr_image, "Image number    "+  str(idx))
+
 
 
