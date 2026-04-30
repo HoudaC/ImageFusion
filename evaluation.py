@@ -1,7 +1,11 @@
 
 import matplotlib.pyplot as plt
-from preprocessing import imageRGB_vminvmax
+from skimage.metrics import mean_squared_error as mse
+from skimage.metrics import structural_similarity as ssim
+from math import sqrt, log10
 import numpy as np
+from preprocessing import imageRGB_vminvmax
+
 vmin =0.0
 vmax=0.8
 
@@ -57,6 +61,23 @@ def plot_images(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
 
         plt.tight_layout()
         plt.show()
+
+
+def calculate_psnr(hr_image, sr_image):
+    mse = np.mean((hr_image - sr_image) ** 2)
+    if mse == 0:
+        return 100
+    pixel_max = 1.0  # Assuming normalized images between 0 and 1
+    return 20 * log10(pixel_max / np.sqrt(mse))
+
+def calculate_ssim(img1, img2):
+    """Calculates Structural Similarity (SSIM) between two images."""
+    # img1 = img1.cpu().numpy()
+    # img2 = img2.cpu().numpy()
+    return ssim(img1, img2, data_range=1.0,multichannel=True)
+# Function to compute RMSE
+def calculate_rmse(hr_image, sr_image):
+    return sqrt(mse(hr_image.flatten(), sr_image.flatten()))
 
 def evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
 

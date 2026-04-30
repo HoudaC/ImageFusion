@@ -9,8 +9,7 @@ from rasterio.plot import reshape_as_image
 from preprocessing import Convolution_opMS, imageRGB_vminvmax, set_seed
 from utils import define_stride, reconstruct_image_avg
 from SRCNN_model import SRCNN, ConditionalSRCNN
-from metrics import calculate_psnr, calculate_ssim, calculate_rmse, plot_images_and_spectra , plot_images_and_compare
-from evaluation import plot_images, evaluate_spectral_fidelity
+from evaluation import plot_images, evaluate_spectral_fidelity, calculate_psnr, calculate_ssim, calculate_rmse
 
 from generate_dataloader import sr_dataloader
 from utils_workshop import read_data2test, test,conditionnal_test, apply_bicubic_interpolation
