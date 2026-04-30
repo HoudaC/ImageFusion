@@ -9,7 +9,7 @@ from rasterio.plot import reshape_as_image
 from preprocessing import Convolution_opMS, imageRGB_vminvmax, set_seed
 from utils import define_stride, reconstruct_image_avg
 from SRCNN_model import SRCNN, ConditionalSRCNN
-from evaluation import plot_images, evaluate_spectral_fidelity, calculate_psnr, calculate_ssim, calculate_rmse
+from evaluation import plot_images, evaluate_spectral_fidelity, calculate_psnr, calculate_ssim, calculate_rmse, calculate_sam
 
 from generate_dataloader import sr_dataloader
 from utils_workshop import read_data2test, test,conditionnal_test, apply_bicubic_interpolation
@@ -64,7 +64,8 @@ if __name__=="__main__":
         rmse = calculate_rmse(gt_hr_image, sr_image)
         psnr = calculate_psnr(gt_hr_image, sr_image)
         ssim = calculate_ssim(gt_hr_image, sr_image)
-        print("SRCNN       ssim=", ssim, "    psnr=", psnr, "       rmse=", rmse)
+        sam = calculate_sam(gt_hr_image, sr_image)
+        print("SRCNN       ssim=", ssim, "    psnr=", psnr, "       rmse=", rmse, "          sam", sam)
         plot_images(lr_image, gt_hr_image, sr_image)
         evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image)
         # plot_images_and_spectra(lr_image, hr_image, sr_image, "Image number    "+  str(idx))
@@ -77,7 +78,8 @@ if __name__=="__main__":
         cond_rmse = calculate_rmse(gt_hr_image, cond_sr_image)
         cond_psnr = calculate_psnr(gt_hr_image, cond_sr_image)
         cond_ssim = calculate_ssim(gt_hr_image, cond_sr_image)
-        print("Guided SRCNN       ssim=", cond_ssim, "    psnr=", cond_psnr, "       rmse=", cond_rmse)
+        cond_sam = calculate_sam(gt_hr_image, cond_sr_image)
+        print("Guided SRCNN       ssim=", cond_ssim, "    psnr=", cond_psnr, "       rmse=", cond_rmse, "          sam=", cond_sam)
         plot_images(lr_image, gt_hr_image, sr_image, cond_sr_image)
         evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image,cond_sr_image)
 

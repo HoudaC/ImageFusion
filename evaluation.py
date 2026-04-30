@@ -5,6 +5,8 @@ from skimage.metrics import structural_similarity as ssim
 from math import sqrt, log10
 import numpy as np
 from preprocessing import imageRGB_vminvmax
+from sewar import sam
+
 
 vmin =0.0
 vmax=0.8
@@ -79,6 +81,13 @@ def calculate_ssim(img1, img2):
 def calculate_rmse(hr_image, sr_image):
     return sqrt(mse(hr_image.flatten(), sr_image.flatten()))
 
+def calculate_sam(img1, img2):
+    """Calculates Structural Similarity (SSIM) between two images."""
+    # img1 = img1.cpu().numpy()
+    # img2 = img2.cpu().numpy()
+    return sam(img1, img2)
+
+
 def evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
 
     sentinel_wavelength = [489, 559, 665, 703, 740, 783, 850, 864, 1610, 2192]
@@ -88,10 +97,17 @@ def evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image, cond_sr_image=No
     plt.plot(sentinel_wavelength,np.mean(sr_image, axis=(0, 1)), "ro", label="Generated SR (SRCNN)")
     plt.plot(sentinel_wavelength, np.mean(lr_image, axis=(0, 1)), "gs", label="Low resolution")
     plt.plot(sentinel_wavelength,np.mean(gt_hr_image, axis =(0,1)), "b*", label="GT")
+    print("SRCNN",np.mean(sr_image, axis=(0, 1)))
+    print("LR", np.mean(lr_image, axis=(0, 1)))
+    print("GT",np.mean(gt_hr_image, axis =(0,1)))
 
     plt.title('Reflectance')
     if cond_sr_image is not None:
         plt.plot(sentinel_wavelength, np.mean(cond_sr_image, axis=(0, 1)), "m^", label="Generated SR (Guided SRCNN)")
+        print("Cond SRCNN", np.mean(cond_sr_image, axis=(0, 1)))
+        print("+++++++++++++++++")
+        print("diff LR-SRCNN", abs(np.mean(lr_image, axis=(0, 1))-np.mean(sr_image, axis=(0, 1))))
+        print("diff LR-Cond SRCNN",abs( np.mean(lr_image, axis=(0, 1))-np.mean(cond_sr_image, axis=(0, 1))))
 
 
     plt.legend(fontsize=10, loc="lower center")
@@ -99,3 +115,4 @@ def evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image, cond_sr_image=No
 
     plt.tight_layout()
     plt.show()
+
