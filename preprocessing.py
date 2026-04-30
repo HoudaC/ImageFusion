@@ -56,7 +56,7 @@ def scalevMinvMax(x,vmin, vmax):
     x2[x2<0.] = 0.
     x2[x2>1.] = 1.0
     return x2
-def imageRGB_vminvmax(I,vmin,vmax):
+def imageRGB_vminvmax(I,vmin=0.0,vmax=0.8):
     """
     imageRGB : processing the image before visualization
     : I : Input satellite image

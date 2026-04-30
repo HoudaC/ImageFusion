@@ -25,8 +25,8 @@ img_size=32
 train_dataloader_batch_size = 2
 patch = (img_size, img_size)
 
-img_train_all = read_data(data_train_dir,500)
-img_val_all = read_data(data_val_dir,100)
+img_train_all, _ = read_data(data_train_dir,500)
+img_val_all, _ = read_data(data_val_dir,100)
 img_train_all = np.stack(img_train_all, axis=0)
 img_val_all = np.stack(img_val_all, axis=0)
 strides = define_stride(img_train_all[0].shape[1], img_size)[0], define_stride(img_train_all[0].shape[2], img_size)[0]
