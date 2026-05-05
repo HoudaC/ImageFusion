@@ -139,12 +139,12 @@ def visualize_RGB_image(img, img_title):
 
 def visualize_RGB_images(img1,img2, img_title1, img_title2):
     fig, axs = plt.subplots(1, 2)
-    axs[0].imshow(imageRGB_vminvmax(img1, vmin, vmax))
+    axs[0].imshow(imageRGB_vminvmax(img1.transpose(1,2,0), vmin, vmax))
     axs[0].set_title(img_title1)
     axs[0].axis('off')
 
     # Original HR Image
-    axs[1].imshow(imageRGB_vminvmax(img2, vmin, vmax))
+    axs[1].imshow(imageRGB_vminvmax(img2.transpose(1,2,0), vmin, vmax))
     axs[1].set_title(img_title2)
     axs[1].axis('off')
     plt.show()
