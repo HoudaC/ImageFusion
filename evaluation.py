@@ -121,9 +121,9 @@ def evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image, cond_sr_image=No
 def plot_spectrum(sentinel_img, guide_img=None):
     plt.figure()
     # Frequency Spectrum for Original HR Image
-    plt.plot(sentinel_wavelength, np.mean(sentinel_img, axis=(0, 1)), "r*-", label="Sentinel-2")
+    plt.plot(sentinel_wavelength, np.mean(sentinel_img, axis=(1, 2)), "r*-", label="Sentinel-2")
     if guide_img is not None:
-        plt.plot(guide_wavelength, np.mean(guide_img, axis=(0, 1)), "b*-",label="Guide")
+        plt.plot(guide_wavelength, np.mean(guide_img, axis=(1, 2)), "b*-",label="Guide")
 
     plt.xlabel("Wavelength", fontsize=14)
     plt.ylabel("Reflectance", fontsize=14)
