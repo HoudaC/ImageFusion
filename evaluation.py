@@ -40,7 +40,7 @@ def plot_images(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
         plt.tight_layout()
         plt.show()
     else:
-        fig, axs = plt.subplots(2, 2, figsize=(12,10), constrained_layout=True)
+        fig, axs = plt.subplots(2, 2, figsize=(15,10), constrained_layout=True)
         # Low-Resolution Image
         axs[0,0].imshow(imageRGB_vminvmax(lr_image, vmin, vmax))
         axs[0,0].set_title('Low-Resolution Image')
