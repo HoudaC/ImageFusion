@@ -129,11 +129,11 @@ def plot_spectrum(sentinel_img, guide_img=None):
     plt.ylabel("Reflectance", fontsize=14)
     plt.show()
 
-def vizualise_RGB_image(img, title):
+def visualize_RGB_image(img, img_title):
     plt.figure()
     # Low-Resolution Image
     plt.imshow(imageRGB_vminvmax(img.transpose(1,2,0), vmin, vmax))
-    plt.set_title(title)
+    plt.title(img_title)
     plt.axis('off')
     plt.show()
 
