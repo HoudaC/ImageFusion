@@ -10,6 +10,9 @@ from sewar import sam
 
 vmin =0.0
 vmax=0.8
+sentinel_wavelength = [489, 559, 665, 703, 740, 783, 850, 864, 1610, 2192]
+guide_wavelength =[490,550,660,845]
+
 
 # Function to plot images and their spectra
 def plot_images(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
@@ -90,7 +93,6 @@ def calculate_sam(img1, img2):
 
 def evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
 
-    sentinel_wavelength = [489, 559, 665, 703, 740, 783, 850, 864, 1610, 2192]
     plt.figure()
 
     # Frequency Spectrum for Original HR Image
@@ -115,4 +117,16 @@ def evaluate_spectral_fidelity(lr_image, gt_hr_image, sr_image, cond_sr_image=No
 
     plt.tight_layout()
     plt.show()
+
+def plot_spectrum(sentinel_img, guide_img=None):
+    plt.figure()
+    # Frequency Spectrum for Original HR Image
+    plt.plot(sentinel_wavelength, np.mean(sentinel_img, axis=(0, 1)), "r*-", label="Sentinel-2")
+    if guide_img is not None:
+        plt.plot(guide_wavelength, np.mean(guide_img, axis=(0, 1)), "b*-",label="Guide")
+
+    plt.xlabel("Wavelength", fontsize=14)
+    plt.ylabel("Reflectance", fontsize=14)
+    plt.show()
+
 
