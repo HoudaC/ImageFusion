@@ -19,7 +19,7 @@ def plot_images(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
 
     if cond_sr_image is  None:
         # Plot Original HR Image, Generated SR Image, and Low-Resolution Image
-        fig, axs = plt.subplots(1, 3)
+        fig, axs = plt.subplots(1, 3, figsize=(10,5), constrained_layout=True)
 
         # Original HR Image
         axs[1].imshow(imageRGB_vminvmax(gt_hr_image, vmin, vmax))
@@ -40,7 +40,7 @@ def plot_images(lr_image, gt_hr_image, sr_image, cond_sr_image=None):
         plt.tight_layout()
         plt.show()
     else:
-        fig, axs = plt.subplots(2, 2)
+        fig, axs = plt.subplots(2, 2, figsize=(10,5), constrained_layout=True)
         # Low-Resolution Image
         axs[0,0].imshow(imageRGB_vminvmax(lr_image, vmin, vmax))
         axs[0,0].set_title('Low-Resolution Image')
@@ -138,7 +138,7 @@ def visualize_RGB_image(img, img_title):
     plt.show()
 
 def visualize_RGB_images(img1,img2, img_title1, img_title2):
-    fig, axs = plt.subplots(1, 2)
+    fig, axs = plt.subplots(1, 2, figsize=(10,5), constrained_layout=True)
     axs[0].imshow(imageRGB_vminvmax(img1.transpose(1,2,0), vmin, vmax))
     axs[0].set_title(img_title1)
     axs[0].axis('off')
